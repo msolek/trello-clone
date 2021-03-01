@@ -1,31 +1,31 @@
 version: "3"
 services:
-  pg_db:
-    container_name: pg_trello
+  trello_pg_db:
+    container_name: trello_pg_db
     image: "postgres:9.6.17"
     restart: always
     environment:
-      POSTGRES_USER: trello
-      POSTGRES_PASSWORD: trello
+      POSTGRES_USER: trello_user
+      POSTGRES_PASSWORD: trello_password
       POSTGRES_MULTIPLE_DATABASES: trello_db,trello_test_db
     ports:
       - "5432:5432"
     volumes:
       - ./scripts:/docker-entrypoint-initdb.d
-      - database-data:/var/lib/postgresql/data/
+      - db-data:/var/lib/postgresql/data/
 
-  pgweb:
-    container_name: pgweb_trello
+  trello_pg_gweb:
+    container_name: trello_pg_web
     restart: always
     image: sosedoff/pgweb
     ports:
       - "8081:8081"
     links:
-      - pg_trello:pg_trelo
+      - trello_pg_db:trello_pg_db
     environment:
-      - DATABASE_URL=postgres://trello:password@trello_db:5432/trello_db?sslmode=disable
+      - DATABASE_URL=postgres://trello_user:trello_password@trello_pg_db:5432/trello_db?sslmode=disable
     depends_on:
-      - pg_trello
+      - trello_pg_db
 
 volumes:
-  database-data:
+  db-data:
