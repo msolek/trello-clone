@@ -2,7 +2,7 @@ version: "3"
 services:
   trello_pg_db:
     container_name: trello_pg_db
-    image: "postgres:9.6.17"
+    image: "postgres:13.2"
     restart: always
     environment:
       POSTGRES_USER: trello_user
@@ -12,7 +12,7 @@ services:
       - "5432:5432"
     volumes:
       - ./scripts:/docker-entrypoint-initdb.d
-      - db-data:/var/lib/postgresql/data/
+      - trello-db-data:/var/lib/postgresql/data/
 
   trello_pg_gweb:
     container_name: trello_pg_web
@@ -28,4 +28,4 @@ services:
       - trello_pg_db
 
 volumes:
-  db-data:
+  trello-db-data:
