@@ -4,6 +4,7 @@ import express from "express";
 import ormconfig from "./typeorm-dev.config";
 const main = async () => {
   const db_connection = await createConnection(ormconfig);
+  db_connection.runMigrations({ transaction: "all" });
 
   const app = express();
   app.listen(4000, () => {

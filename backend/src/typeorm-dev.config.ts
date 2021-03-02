@@ -7,6 +7,7 @@ export default {
   port: Number(process.env.DB_PORT),
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
   entities: [Project, Task],
   synchronize: true,
   logging: true,
